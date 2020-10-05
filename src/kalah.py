@@ -16,7 +16,7 @@ class Cup:
         #TODO: Figure out how to display objects
         return f'Cup {number}: {value} seeds'
 
-class KalaGame:
+class KalahGame:
     def __init__(self):
         self.state = {
             "board": self.GenerateInitialBoardState(),
@@ -57,5 +57,5 @@ class KalaGame:
                     seeds = seeds - 1
 
 #Testing
-cup = KalaGame()
+cup = KalahGame()
 print(str(cup.state["board"][0]))
