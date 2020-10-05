@@ -19,6 +19,7 @@ class Cup:
         return f'Cup {self.number}: {self.value} seeds'
 
 class KalahGame:
+    #TODO: Make overloaded constructor to make copy of game given a game state
     def __init__(self):
         self.state = {
             'board': self.GenerateInitialBoardState(),
@@ -31,13 +32,14 @@ class KalahGame:
         cups = []
         type = 1
         for i in range(1,11):
-            if i == 5 or i == 10:
+            if i % 5 == 0:
                 type = 0
             cups.append(Cup(type=type,
                             value=4*type,
                             number=i,
                             nextCup=(i+1)%10,
                             captureCup=10-i))
+            type = 1
         return cups
 
     def MakeMove(self, move):
@@ -87,30 +89,42 @@ class KalahGame:
             if repeat:
                 # If gaining another consecutive move, check moves of the same parity
                 if move < 5:
-                    for i in range(5):
+                    for i in range(4):
                         if self.state['board'][i].value > 0:
                             possibleMoves.append(i+1)
                 else:
-                    for i in range(5, 10):
+                    for i in range(5, 9):
                         if self.state['board'][i].value > 0:
                             possibleMoves.append(i+1)
             else:
                 # Else check moves of opposite parity
                 if move < 5:
-                    for i in range(5, 10):
+                    for i in range(5, 9):
                         if self.state['board'][i].value > 0:
                             possibleMoves.append(i+1)
                 else:
-                    for i in range(5):
+                    for i in range(4):
                         if self.state['board'][i].value > 0:
                             possibleMoves.append(i+1)
 
             self.state['possibleMoves'] = possibleMoves
 
             # If there are no possible moves, set the end flag
-            if len(possibleMoves) = 0:
+            if len(possibleMoves) == 0:
                 self.end = True
 
-#Testing
-cup = KalahGame()
-print(cup.state['board'][0])
+    def __str__(self):
+        str = 'Game Board: \n'
+        for i in range(8, 4, -1):
+            str = str + f'{self.state["board"][i].value} '
+        str = str + '\n'
+        for i in range(4):
+            str = str + f'{self.state["board"][i].value} '
+        str = str + '\n'
+        str = str + f'Possible Moves: {self.state["possibleMoves"]}\n'
+        str = str + f'Score: P1 {self.state["score"][0]} P2 {self.state["score"][1]}'
+        return str
+
+# #Testing
+# cup = KalahGame()
+# print(cup.state['board'][0])
