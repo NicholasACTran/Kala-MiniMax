@@ -1,4 +1,5 @@
 from kalah import KalahGame
+from minimax import Minimax
 
 Game = KalahGame()
 while not Game.end:

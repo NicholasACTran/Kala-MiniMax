@@ -20,13 +20,30 @@ class Cup:
 
 class KalahGame:
     #TODO: Make overloaded constructor to make copy of game given a game state
-    def __init__(self):
-        self.state = {
-            'board': self.GenerateInitialBoardState(),
-            'possibleMoves': [1, 2, 3, 4],
-            'score': (0, 0)
-        }
+    def __init__(self, state = None):
+        if state is None:
+            self.state = {
+                'board': self.GenerateInitialBoardState(),
+                'possibleMoves': [1, 2, 3, 4],
+                'score': (0, 0)
+            }
+        else:
+            self.state = {
+                'board': self.GenerateSpecificBoardState(state['board']),
+                'possibleMoves': state['possibleMoves'],
+                'score': state['score']
+            }
         self.end = False
+
+    def GenerateSpecificBoardState(self, board):
+        cups = []
+        for cup in board:
+            cups.append(Cup(type=cup.type,
+                            value=cup.value,
+                            number=cup.number,
+                            nextCup=cup.nextCup,
+                            captureCup=cup.captureCup))
+        return cups
 
     def GenerateInitialBoardState(self):
         cups = []
