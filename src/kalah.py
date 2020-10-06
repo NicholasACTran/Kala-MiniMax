@@ -19,7 +19,6 @@ class Cup:
         return f'Cup {self.number}: {self.value} seeds'
 
 class KalahGame:
-    #TODO: Make overloaded constructor to make copy of game given a game state
     def __init__(self, state = None):
         if state is None:
             self.state = {
@@ -141,7 +140,3 @@ class KalahGame:
         str = str + f'Possible Moves: {self.state["possibleMoves"]}\n'
         str = str + f'Score: P1 {self.state["score"][0]} P2 {self.state["score"][1]}'
         return str
-
-# #Testing
-# cup = KalahGame()
-# print(cup.state['board'][0])
